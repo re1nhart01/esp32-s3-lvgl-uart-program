@@ -39,7 +39,15 @@ public:
       }
   }
 
-  ~AdminScreen() override = default;
+  ~AdminScreen() {
+    Component::~Component();
+  };
+
+  void on_mount() override {
+    Component::on_mount();
+    
+  };
+
 
   lv_obj_t *render() override
   {
@@ -98,6 +106,8 @@ public:
 
     return renderer->get_component();
   }
+
+
 
   std::shared_ptr<Styling> styling() override
   {

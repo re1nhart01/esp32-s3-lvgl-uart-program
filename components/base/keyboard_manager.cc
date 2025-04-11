@@ -2,7 +2,10 @@ extern "C" {
   #include "lv_demos.h"
 }
 
-using callback_keyboard = void (*)(lv_event_t *);
+
+
+typedef void (*callback_keyboard)(lv_event_t *);
+//using callback_keyboard = void (*)(lv_event_t *);
 
 namespace base_widgets {
     class KeyboardManager {
@@ -58,7 +61,7 @@ namespace base_widgets {
 
         void detach_on_submit_event(const std::function<void(std::string value)> on_submit = nullptr) {
           if (this->keyboard == nullptr) return;
-          
+
           lv_obj_remove_event_cb(keyboard, this->lambda);
 
           this->lambda = nullptr;

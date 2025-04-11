@@ -8,6 +8,7 @@
 
 #include "base_widget.hh"
 
+#include <esp_log.h>
 
 extern "C" {
 #include "lv_demos.h"
@@ -27,7 +28,9 @@ namespace base_widgets {
         Ref* ref = nullptr;
 
     public:
-        virtual ~Component() = default;
+        virtual ~Component() {
+          on_unmount();
+        };
 
         // ✅ Базовий конструктор — дозволяє створити компонент без LVGL-об'єкта
         Component() {
@@ -37,10 +40,17 @@ namespace base_widgets {
         explicit Component(lv_obj_t* obj, lv_obj_t* parent)
             : component(obj), parent(parent) {
             this->style = std::make_shared<Styling>();
+
+            on_mount();
         }
 
-        // virtual void on_mount() = 0;
-        // virtual void on_unmount() = 0;
+        virtual void on_mount() {
+          ESP_LOGI("Component*", "on mount");
+        };
+
+        virtual void on_unmount() {
+          ESP_LOGI("Component*", "on mount");
+        };
 
         virtual lv_obj_t* render() = 0;
         virtual std::shared_ptr<Styling> styling() = 0;
