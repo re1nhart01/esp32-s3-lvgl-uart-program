@@ -18,6 +18,8 @@ namespace base_widgets {
         lv_event_cb_t on_focused = nullptr;
         lv_event_cb_t on_defocused = nullptr;
         lv_event_cb_t on_value_changed = nullptr;
+        std::function<void(std::string value)> on_submit = nullptr;
+
     };
 
     class TextInput final : public Component {
@@ -32,6 +34,10 @@ namespace base_widgets {
             : Component(nullptr, nullptr)  {
             this->props = props;
             this->kbManager = kbManager;
+
+            if (this->props.on_submit != nullptr) {
+                this->kbManager
+              }
 
             if (this->props.ref != nullptr) {
                 this->props.ref->set(this);
@@ -64,19 +70,27 @@ namespace base_widgets {
             if (kbManager != nullptr) {
                 lv_obj_add_event_cb(obj, [](lv_event_t* e) {
                     _lv_obj_t* ta = lv_event_get_target(e);
-                    KeyboardManager* kbMgr = static_cast<KeyboardManager*>(lv_event_get_user_data(e));
+                    TextInput* instance = static_cast<TextInput*>(lv_event_get_user_data(e));
 
-                    if (kbMgr != nullptr && kbMgr->get_keyboard() != nullptr) {
-                        kbMgr->create(lv_scr_act());
+                    if (instance->kbManager != nullptr && instance->kbManager->get_keyboard() != nullptr) {
+                        instance->kbManager->create(lv_scr_act());
                     }
 
-                    kbMgr->attach(ta);
-                }, LV_EVENT_CLICKED, kbManager);
+                    if (instance->props.on_submit != nullptr) {
+                        instance->kbManager->attach_on_submit_event(instance->props.on_submit);
+                    }
+                    instance->kbManager->attach(ta);
+                }, LV_EVENT_CLICKED, this);
 
                 lv_obj_add_event_cb(obj, [](lv_event_t* e) {
-                    auto kbMgr = static_cast<KeyboardManager*>(lv_event_get_user_data(e));
-                    kbMgr->hide();
-                }, LV_EVENT_DEFOCUSED, kbManager);
+                    TextInput* instance = static_cast<TextInput*>(lv_event_get_user_data(e));
+
+                  if (instance->props.on_submit != nullptr) {
+                      instance->kbManager->detach_on_submit_event(instance->props.on_submit);
+                  }
+
+                    instance->kbManager->hide();
+                }, LV_EVENT_DEFOCUSED, this);
             }
 
             return obj;

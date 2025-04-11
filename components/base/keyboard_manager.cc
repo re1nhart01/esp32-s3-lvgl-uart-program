@@ -1,17 +1,15 @@
-#ifndef KEYBOARD_MANAGER_HH
-#define KEYBOARD_MANAGER_HH
-
 extern "C" {
-#include "lv_demos.h"
-#include "lvgl_port.h"
+  #include "lv_demos.h"
 }
 
-namespace base_widgets {
+using callback_keyboard = void (*)(lv_event_t *);
 
+namespace base_widgets {
     class KeyboardManager {
     private:
         lv_obj_t* keyboard = nullptr;
-
+        std::function<void(std::string value)> on_submit_callback = nullptr;
+        callback_keyboard lambda = nullptr;
     public:
         void create(lv_obj_t* parent) {
             if (!keyboard) {
@@ -34,6 +32,38 @@ namespace base_widgets {
             }
         }
 
+      void attach_on_submit_event(const std::function<void(std::string value)> on_submit = nullptr) {
+          if (this->keyboard == nullptr) return;
+
+          this->on_submit_callback = on_submit;
+
+          this->lambda = [](lv_event_t *e) {
+            lv_obj_t* kb = lv_event_get_target(e);
+            auto* self = static_cast<KeyboardManager*>(lv_event_get_user_data(e)); // get `this`
+
+            if (lv_event_get_code(e) == LV_EVENT_READY) {
+                lv_obj_t* ta = lv_keyboard_get_textarea(kb);
+                const char* text = lv_textarea_get_text(ta);
+
+                if (self->on_submit_callback) {
+                    self->on_submit_callback(std::string(text));
+                }
+
+                lv_obj_del(kb);
+            }
+          };
+
+          lv_obj_add_event_cb(this->keyboard, lambda, LV_EVENT_ALL, this); // pass `this` as user_data
+        }
+
+        void detach_on_submit_event(const std::function<void(std::string value)> on_submit = nullptr) {
+          if (this->keyboard == nullptr) return;
+          
+          lv_obj_remove_event_cb(keyboard, this->lambda);
+
+          this->lambda = nullptr;
+        }
+
         bool is_visible() const {
             return keyboard && !lv_obj_has_flag(keyboard, LV_OBJ_FLAG_HIDDEN);
         }
@@ -43,6 +73,4 @@ namespace base_widgets {
         }
     };
 
-} // namespace base_widgets
-
-#endif // KEYBOARD_MANAGER_HH
+}
