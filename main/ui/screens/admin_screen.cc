@@ -7,6 +7,7 @@
 #include "../../../components/base/view.cc"
 
 #include "../../../components/base/button.cc"
+#include "../../../components/base/text_input.cc"
 #include "../../../components/base/label.cc"
 #include "../../../components/base/state.cc"
 #include "stack_navigator.cc"
@@ -17,6 +18,8 @@ struct admin_screen_props
 {
   std::shared_ptr<base_widgets::Ref> ref = nullptr;
 };
+
+std::unique_ptr<KeyboardManager> admin_keyboard = std::make_unique<KeyboardManager>();
 
 class AdminScreen : public base_widgets::Component
 {
@@ -44,11 +47,6 @@ public:
     std::shared_ptr<Styling> style1 = std::make_shared<Styling>();
     std::shared_ptr<Styling> style2 = std::make_shared<Styling>();
 
-    // if (style != nullptr) {
-    //     lv_obj_add_style(this->get_component(), style->getStyle(),
-    //     LV_PART_MAIN);
-    // }
-
     auto navigator_ref = this->navigator;
 
     auto renderer = std::make_shared<View>(
@@ -75,7 +73,17 @@ public:
                        .on_released = [](lv_event_t *e) { /* ... */ },
                        .on_focused = [](lv_event_t *e) { /* ... */ },
                        .on_defocused = [](lv_event_t *e) { /* ... */ },
-                     })},
+                     }),
+                    std::make_shared<TextInput>(textinput_props{
+                        .ref = nullptr,
+                        .style = style1,
+                        .placeholder = "text",
+                        .on_click = [](lv_event_t *e) {  },
+                        .on_focused = [](lv_event_t *e) { /* ... */ },
+                        .on_defocused = [](lv_event_t *e) { /* ... */ },
+                        .on_value_changed = [](lv_event_t *e) { /* ... */ }
+                    }, admin_keyboard.get())
+        },
         .width = 620,
         .height = 180,
         .justify_content = LV_FLEX_ALIGN_SPACE_BETWEEN,

@@ -1,6 +1,6 @@
 #include "application.hh"
 #include "view.cc"
-#include "app.cc";
+#include "app.cc"
 
 
 #define entrypoint [[maybe_unused]]

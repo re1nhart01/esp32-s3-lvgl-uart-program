@@ -37,9 +37,9 @@ public:
     stack_navigator->registerScreen("/admin", admin_screen);
 
     auto initial = stack_navigator->getCurrentComponent();
-    if (initial) {
-      initial->set_parent(screen);
-    }
+    // if (initial) {
+    //   initial->set_parent(screen);
+    // }
 
     return initial.get();
   }

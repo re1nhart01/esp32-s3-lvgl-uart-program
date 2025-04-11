@@ -25,7 +25,6 @@ struct main_screen_props
 std::shared_ptr<Ref> label_ref = std::make_shared<Ref>("LABEL_0");
 std::shared_ptr<State<int>> state = std::make_shared<State<int>>(0);
 std::shared_ptr<View> root_element;
-static int i = 0;
 
 class MainScreen : public base_widgets::Component
 {
