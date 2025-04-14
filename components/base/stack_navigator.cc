@@ -54,12 +54,15 @@ namespace base_widgets {
                 auto screen = it->second;
 
                 lv_obj_t* active_screen = lv_scr_act();
+
                 lv_obj_clean(active_screen);
 
                 screen->set_parent(active_screen);
 
                 lv_obj_t* obj = screen->render();
                 screen->set_component(obj);
+
+                screen->on_mount();
 
                 current_screen = std::make_shared<StackCurrentScreen>(StackCurrentScreen{
                     .id = ++id_counter,

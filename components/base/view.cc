@@ -1,14 +1,6 @@
-//
-// Created by evgeniy on 3/29/25.
-//
-
 #pragma once
 
-#ifndef VIEW_HH
-#define VIEW_HH
-
 #include "component.hh"
-#include "../lvgl__lvgl/demos/lv_demos.h"
 #include <memory>
 #include <vector>
 
@@ -56,8 +48,7 @@ struct view_props {
     lv_flex_align_t track_cross_place = LV_FLEX_ALIGN_START;
     lv_flex_flow_t flex_direction = LV_FLEX_FLOW_COLUMN;
 };
-
-
+  
     class View final : public Component {
         view_props props;
         std::vector<std::shared_ptr<Component>> children;
@@ -68,7 +59,10 @@ struct view_props {
             this->props = props;
             set_style(props.style);
             if (!props.children.empty()) {
-                this->children.insert(this->children.end(), props.children.begin(), props.children.end());
+                this->children.insert(
+                  this->children.end(),
+                        props.children.begin(),
+                        props.children.end());
             }
 
             if (this->props.ref != nullptr) {
@@ -123,11 +117,4 @@ struct view_props {
             return lv_obj_create(parental);
         }
     };
-
-
-
-
-
 } // namespace base_widgets
-
-#endif //VIEW_HH

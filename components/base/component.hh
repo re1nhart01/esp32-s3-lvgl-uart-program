@@ -32,7 +32,6 @@ namespace base_widgets {
           on_unmount();
         };
 
-        // ✅ Базовий конструктор — дозволяє створити компонент без LVGL-об'єкта
         Component() {
             this->style = std::make_shared<Styling>();
         }
