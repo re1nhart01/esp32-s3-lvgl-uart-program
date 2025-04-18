@@ -5,6 +5,8 @@
 
 #include "keyboard_manager.cc"
 #include "component.hh"
+#include <functional>
+#include <string>
 
 namespace base_widgets {
     class KeyboardManager;
@@ -19,30 +21,30 @@ namespace base_widgets {
         lv_event_cb_t on_defocused = nullptr;
         lv_event_cb_t on_value_changed = nullptr;
         std::function<void(std::string value)> on_submit = nullptr;
-
     };
 
     class TextInput final : public Component {
     protected:
         mutable lv_obj_t* keyboard = nullptr;
-        base_widgets::KeyboardManager* kbManager;
+        KeyboardManager* kbManager;
 
     public:
         textinput_props props;
 
-        explicit TextInput(const textinput_props& props, base_widgets::KeyboardManager* kbManager = nullptr)
-            : Component(nullptr, nullptr)  {
-            this->props = props;
-            this->kbManager = kbManager;
+        explicit TextInput(const textinput_props& props,
+                           KeyboardManager *kbManager = nullptr)
+            : Component(nullptr, nullptr)
+        {
+          this->props = props;
+          this->kbManager = kbManager;
 
-            if (this->props.on_submit != nullptr) {
-                this->kbManager
-              }
+          if (this->props.on_submit != nullptr) {
+              this->kbManager->attach_on_submit_event(this->props.on_submit);
+          }
 
-            if (this->props.ref != nullptr) {
-                this->props.ref->set(this);
-            }
-
+          if (this->props.ref != nullptr) {
+              this->props.ref->set(this);
+          }
         }
 
         ~TextInput() override = default;
@@ -70,9 +72,9 @@ namespace base_widgets {
             if (kbManager != nullptr) {
                 lv_obj_add_event_cb(obj, [](lv_event_t* e) {
                     _lv_obj_t* ta = lv_event_get_target(e);
-                    TextInput* instance = static_cast<TextInput*>(lv_event_get_user_data(e));
+                    auto* instance = static_cast<TextInput*>(lv_event_get_user_data(e));
 
-                    if (instance->kbManager != nullptr && instance->kbManager->get_keyboard() != nullptr) {
+                    if (instance->kbManager != nullptr) {
                         instance->kbManager->create(lv_scr_act());
                     }
 
@@ -80,14 +82,14 @@ namespace base_widgets {
                         instance->kbManager->attach_on_submit_event(instance->props.on_submit);
                     }
                     instance->kbManager->attach(ta);
-                }, LV_EVENT_CLICKED, this);
+                }, LV_EVENT_FOCUSED, this);
 
                 lv_obj_add_event_cb(obj, [](lv_event_t* e) {
-                    TextInput* instance = static_cast<TextInput*>(lv_event_get_user_data(e));
+                    auto* instance = static_cast<TextInput*>(lv_event_get_user_data(e));
 
-                  if (instance->props.on_submit != nullptr) {
-                      instance->kbManager->detach_on_submit_event(instance->props.on_submit);
-                  }
+                  // if (instance->props.on_submit != nullptr) {
+                  //     instance->kbManager->detach_on_submit_event(instance->props.on_submit);
+                  // }
 
                     instance->kbManager->hide();
                 }, LV_EVENT_DEFOCUSED, this);
@@ -97,7 +99,10 @@ namespace base_widgets {
         }
 
         std::shared_ptr<Styling> styling() override {
-            return props.style;
+          if (this->props.style) {
+              return this->props.style;
+          }
+          return {};
         }
 
         TextInput* append(lv_obj_t* obj) override {

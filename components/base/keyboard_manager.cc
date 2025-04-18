@@ -1,3 +1,9 @@
+
+#pragma once
+
+#include <functional>
+#include <string>
+
 extern "C" {
   #include "lv_demos.h"
 }
@@ -11,7 +17,7 @@ namespace base_widgets {
     class KeyboardManager {
     private:
         lv_obj_t* keyboard = nullptr;
-        std::function<void(std::string value)> on_submit_callback = nullptr;
+        std::function<void(std::string)> on_submit_callback;
         callback_keyboard lambda = nullptr;
     public:
         void create(lv_obj_t* parent) {
@@ -52,7 +58,7 @@ namespace base_widgets {
                     self->on_submit_callback(std::string(text));
                 }
 
-                lv_obj_del(kb);
+                // lv_obj_del(kb);
             }
           };
 

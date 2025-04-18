@@ -94,9 +94,10 @@ struct scroll_view_props {
         }
 
         std::shared_ptr<Styling> styling() override {
-            if (this->props.style)
-                return this->props.style;
-            return {};
+          if (this->props.style) {
+              return this->props.style;
+          }
+          return {};
         }
 
         ScrollView* append(lv_obj_t *obj) override {

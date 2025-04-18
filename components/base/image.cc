@@ -6,27 +6,21 @@ namespace base_widgets {
     std::shared_ptr<Ref> ref = nullptr;
     std::shared_ptr<Styling> style;
 
+    short real_width = 0;
+    short real_height = 0;
   };
 
   class Image final : public Component {
         image_props props;
-        const std::string& base64_source;
-
+        const std::string* base64_source = nullptr;
+    lv_img_dsc_t img_dsc;
     public:
-        explicit Image(const std::string& base64, const image_props &props)
-          : base64_source(base64) {
+        explicit Image(const lv_img_dsc_t source, const image_props& props)
+          : Component(nullptr, nullptr) {
         this->props = props;
         set_style(props.style);
 
-        if(this->props.ref != nullptr) {
-            this->props.ref->set(this);
-          }
-      }
-
-      explicit Image(const image_props &props)
-          : Component(nullptr, nullptr), base64_source("") {
-        this->props = props;
-        set_style(props.style);
+        this->img_dsc = source;
 
         if(this->props.ref != nullptr) {
             this->props.ref->set(this);
@@ -36,17 +30,14 @@ namespace base_widgets {
       ~Image() override = default;
 
         lv_obj_t* render() override {
-            if (get_component() == nullptr || this->parent == nullptr) {
-                this->set_component(this->create_initial(this->parent));
-            }
-
-          std::string decoded_string  = base64_decode(this->base64_source);
-
-          lv_obj_t* img = lv_img_create(lv_scr_act());
-          lv_img_set_src(img, decoded_string.data());
-          lv_obj_align(img, LV_ALIGN_CENTER, 0, 0);
+          if (get_component() == nullptr || this->parent == nullptr) {
+              this->set_component(this->create_initial(this->parent));
+          }
 
           lv_obj_t* comp = get_component();
+          lv_img_set_src(comp, &this->img_dsc);
+          lv_obj_align(comp, LV_ALIGN_CENTER, 0, 0);
+
 
 
           std::shared_ptr<Styling> style = this->styling();
@@ -59,8 +50,9 @@ namespace base_widgets {
         }
 
         std::shared_ptr<Styling> styling() override {
-            if (this->props.style)
+            if (this->props.style) {
                 return this->props.style;
+            }
             return {};
         }
 

@@ -7,9 +7,10 @@
 #include "../../../components/base/view.cc"
 
 #include "../../../components/base/button.cc"
-#include "../../../components/base/text_input.cc"
+#include "../../../components/base/image.cc"
 #include "../../../components/base/label.cc"
 #include "../../../components/base/state.cc"
+#include "../../../components/base/text_input.cc"
 #include "stack_navigator.cc"
 
 using namespace base_widgets;
@@ -20,6 +21,7 @@ struct admin_screen_props
 };
 
 std::unique_ptr<KeyboardManager> admin_keyboard = std::make_unique<KeyboardManager>();
+std::shared_ptr<Styling> imageStyle = std::make_shared<Styling>();
 
 class AdminScreen : public base_widgets::Component
 {
@@ -57,6 +59,10 @@ public:
 
     auto navigator_ref = this->navigator;
 
+    LV_IMG_DECLARE(img_lvgl_logo);
+
+    imageStyle->setSize(100, 100);
+
     auto renderer = std::make_shared<View>(
       this->parent,
       view_props{
@@ -89,10 +95,29 @@ public:
                         .on_click = [](lv_event_t *e) {  },
                         .on_focused = [](lv_event_t *e) { /* ... */ },
                         .on_defocused = [](lv_event_t *e) { /* ... */ },
-                        .on_value_changed = [](lv_event_t *e) { /* ... */ }
-                    }, admin_keyboard.get())
+                        .on_value_changed = [](lv_event_t *e) { /* ... */ },
+                        .on_submit = [](std::string value) {
+                          ESP_LOGI("LoG", "%s", value.c_str());
+                          admin_keyboard.get()->hide();
+                        }
+                    }, admin_keyboard.get()),
+          //           std::make_shared<Image>(img_lvgl_logo, image_props{
+          //             .ref = nullptr,
+          //             .style = imageStyle,
+          //           }),
+          // std::make_shared<Image>(img_lvgl_logo, image_props{
+          //             .ref = nullptr,
+          //             .style = imageStyle,
+          //           })
+          // ,std::make_shared<Image>(img_lvgl_logo, image_props{
+          //             .ref = nullptr,
+          //             .style = imageStyle,
+          // }),std::make_shared<Image>(img_lvgl_logo, image_props{
+          //   .ref = nullptr,
+          //   .style = imageStyle,
+          // })
         },
-        .width = 620,
+        .width = LV_PCT(100),
         .height = 180,
         .justify_content = LV_FLEX_ALIGN_SPACE_BETWEEN,
         .align_items = LV_FLEX_ALIGN_CENTER,

@@ -11,6 +11,8 @@ class Styling
 {
 private:
   lv_style_t style;
+  short width = -1;
+  short height = -1;
 
 public:
   Styling() { lv_style_init(&style); }
@@ -198,4 +200,19 @@ public:
     return this;
   }
 
+  Styling* setWidth(const short width) {
+    this->width = width;
+    return this;
+  }
+
+  Styling* setHeight(const short height) {
+    this->height = height;
+    return this;
+  }
+
+  Styling* setSizeW(const short width, const short height) {
+    this->width = width;
+    this->height = height;
+    return this;
+  }
 };

@@ -67,7 +67,10 @@ public:
   }
 
   std::shared_ptr<Styling> styling() override {
-    return props.style;
+    if (this->props.style) {
+        return this->props.style;
+    }
+    return {};
   }
 
   Button *append(lv_obj_t *obj) override {
