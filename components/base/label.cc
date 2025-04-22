@@ -3,7 +3,7 @@
 
 #include "component.hh"
 
-namespace base_widgets {
+namespace foundation {
 
     struct label_events {
         lv_event_cb_t on_click = nullptr;
@@ -73,6 +73,6 @@ namespace base_widgets {
         }
     };
 
-} // namespace base_widgets
+} // namespace foundation
 
 #endif // LABEL_HH

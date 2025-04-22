@@ -19,7 +19,7 @@ extern "C" {
 
 //LV_DIR_HOR чи LV_DIR_ALL
 
-namespace base_widgets {
+namespace foundation {
 
 struct scroll_view_props {
     std::shared_ptr<Ref> ref = nullptr;
@@ -114,6 +114,6 @@ struct scroll_view_props {
 
 
 
-} // namespace base_widgets
+} // namespace foundation
 
 #endif //VIEW_HH

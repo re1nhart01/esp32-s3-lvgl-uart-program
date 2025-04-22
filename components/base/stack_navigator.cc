@@ -7,7 +7,7 @@
 
 #include "esp_log.h"
 
-namespace base_widgets {
+namespace foundation {
 
     struct StackCurrentScreen {
         int id;

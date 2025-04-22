@@ -1,7 +1,7 @@
 #include "component.hh"
 #include "base64.cc"
 
-namespace base_widgets {
+namespace foundation {
   struct image_props {
     std::shared_ptr<Ref> ref = nullptr;
     std::shared_ptr<Styling> style;
@@ -46,7 +46,7 @@ namespace base_widgets {
               lv_obj_add_style(this->get_component(), style->getStyle(), LV_PART_MAIN);
           }
 
-            return comp;
+          return comp;
         }
 
         std::shared_ptr<Styling> styling() override {

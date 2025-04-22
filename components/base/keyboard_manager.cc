@@ -13,7 +13,7 @@ extern "C" {
 typedef void (*callback_keyboard)(lv_event_t *);
 //using callback_keyboard = void (*)(lv_event_t *);
 
-namespace base_widgets {
+namespace foundation {
     class KeyboardManager {
     private:
         lv_obj_t* keyboard = nullptr;

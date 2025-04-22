@@ -1,9 +1,9 @@
-#include "application.hh"
+#include <utility>
+
 #include "component.hh"
 #include "view.cc"
 
 #include "button.cc"
-#include "image.cc"
 #include "label.cc"
 #include "status_bar.cc"
 #include "state.cc"
@@ -11,24 +11,32 @@
 #include "macro_component.cc"
 #include "stack_navigator.cc"
 
+#include "stack_navigator.cc"
+
+namespace foundation
+{
+  class StackNavigator;
+}
+
 using namespace foundation;
 
-struct admin_screen_props
+struct pincode_screen_props
 {
   std::shared_ptr<foundation::Ref> ref = nullptr;
 };
 
-std::unique_ptr<KeyboardManager> admin_keyboard = std::make_unique<KeyboardManager>();
-std::shared_ptr<Styling> imageStyle = std::make_shared<Styling>();
+std::shared_ptr<Ref> label_ref = std::make_shared<Ref>("LABEL_0");
+std::shared_ptr<State<int>> state = std::make_shared<State<int>>(0);
+std::shared_ptr<View> root_element;
 
-class AdminScreen : public foundation::Component
+class PinCodeScreen : public foundation::Component
 {
-  admin_screen_props props;
+  pincode_screen_props props;
   std::shared_ptr<StackNavigator> navigator;
 
 public:
-  explicit AdminScreen(std::shared_ptr<StackNavigator> stack,
-                       const admin_screen_props &props)
+  explicit PinCodeScreen(std::shared_ptr<StackNavigator> stack,
+                      const pincode_screen_props &props)
       : Component(nullptr, nullptr)
   {
     this->props = props;
@@ -39,14 +47,7 @@ public:
       }
   }
 
-  ~AdminScreen() {
-    Component::~Component();
-  };
-
-  void on_mount() override {
-    Component::on_mount();
-  };
-
+  ~PinCodeScreen() override = default;
 
   lv_obj_t *render() override
   {
@@ -55,10 +56,6 @@ public:
     std::shared_ptr<Styling> style2 = std::make_shared<Styling>();
 
     auto navigator_ref = this->navigator;
-
-    LV_IMG_DECLARE(img_lvgl_logo);
-
-    imageStyle->setSize(100, 100);
 
     auto renderer = $view(
       this->parent,
@@ -100,9 +97,8 @@ public:
                         .on_value_changed = [](lv_event_t *e) { /* ... */ },
                         .on_submit = [](std::string value) {
                           ESP_LOGI("LoG", "%s", value.c_str());
-                          admin_keyboard.get()->hide();
                         }
-                    }, admin_keyboard.get()),
+                    }, nullptr),
         },
         .width = LV_PCT(100),
         .height = LV_PCT(100),
@@ -132,7 +128,7 @@ public:
     return this->style;
   }
 
-  AdminScreen *append(lv_obj_t *obj) override
+  PinCodeScreen* append(lv_obj_t *obj) override
   {
     lv_obj_set_parent(obj, get_component());
     return this;

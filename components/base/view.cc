@@ -34,7 +34,7 @@ typedef enum {
  */
 
 
-namespace base_widgets {
+namespace foundation {
 
 struct view_props {
     std::shared_ptr<Ref> ref = nullptr;
@@ -54,7 +54,7 @@ struct view_props {
         std::vector<std::shared_ptr<Component>> children;
     public:
         explicit View(lv_obj_t *parent, const view_props& props)
-            : Component(this->create_initial(parent), parent)
+            : Component(nullptr, parent)
         {
             this->props = props;
             set_style(props.style);
@@ -118,4 +118,4 @@ struct view_props {
             return lv_obj_create(parental);
         }
     };
-} // namespace base_widgets
+} // namespace foundation

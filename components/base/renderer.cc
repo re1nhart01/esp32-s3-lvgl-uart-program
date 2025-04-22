@@ -4,7 +4,7 @@
 
 #include "renderer.hh"
 
-namespace base_widgets {
+namespace foundation {
     class Renderer {
 
     };

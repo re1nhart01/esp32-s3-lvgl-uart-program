@@ -14,9 +14,7 @@ extern "C" {
 static const char *APP_TAG = "App:";
 
 
-namespace base_widgets {
-    class View;
-
+namespace foundation {
     class Application {
     protected:
         lv_obj_t* screen = nullptr;
@@ -98,4 +96,4 @@ namespace base_widgets {
 
     }
 
-} // namespace base_widgets
+} // namespace foundation

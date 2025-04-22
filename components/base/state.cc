@@ -4,7 +4,7 @@
 
 #include <functional>
 
-namespace base_widgets {
+namespace foundation {
 template <typename T, int MaxListeners = 8>
 class State {
   T value;

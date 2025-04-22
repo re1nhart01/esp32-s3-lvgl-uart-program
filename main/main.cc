@@ -9,7 +9,7 @@ extern "C" {
 #include "core/waveshare_rgb_lcd_port.h"
 }
 
-using namespace base_widgets;
+using namespace foundation;
 
 std::shared_ptr<WaveApplication> application;
 

@@ -6,7 +6,7 @@
 #include <functional>
 #include <utility>
 
-namespace base_widgets {
+namespace foundation {
 static void event_adapter(lv_event_t *event);
 
 struct button_props {
@@ -116,6 +116,6 @@ static void event_adapter(lv_event_t *event) {
   }
 }
 
-} // namespace base_widgets
+} // namespace foundation
 
 #endif // BUTTON_HH

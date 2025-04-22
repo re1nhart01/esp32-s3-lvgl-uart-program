@@ -8,7 +8,7 @@
 #include <functional>
 #include <string>
 
-namespace base_widgets {
+namespace foundation {
     class KeyboardManager;
 
     struct textinput_props {
@@ -119,6 +119,6 @@ namespace base_widgets {
         }
     };
 
-} // namespace base_widgets
+} // namespace foundation
 
 #endif // TEXTINPUT_HH

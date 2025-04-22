@@ -18,7 +18,7 @@ extern "C" {
 
 
 
-namespace base_widgets {
+namespace foundation {
   class Component {
     protected:
         std::shared_ptr<Styling> style;

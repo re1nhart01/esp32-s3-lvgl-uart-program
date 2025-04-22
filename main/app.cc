@@ -5,9 +5,10 @@
 #include "button.cc"
 #include "main_screen.cc"
 #include "admin_screen.cc"
+#include "pincode_screen.cc"
 
 
-using namespace base_widgets;
+using namespace foundation;
 
 
 std::shared_ptr<View> root_app_view;
@@ -16,10 +17,13 @@ std::shared_ptr<State<int> > state_1 = std::make_shared<State<int> >(0);
 std::shared_ptr<StackNavigator> stack_navigator = std::make_shared<
   StackNavigator>(StackNavigatorConfig{.initial_route = "/main"});
 
+
 auto main_screen = std::make_shared<MainScreen>(
     stack_navigator, main_screen_props{.ref = nullptr});
 auto admin_screen = std::make_shared<AdminScreen>(
     stack_navigator, admin_screen_props{.ref = nullptr});
+auto pincode_screen = std::make_shared<PinCodeScreen>(
+    stack_navigator, pincode_screen_props{.ref = nullptr});
 
 
 class WaveApplication : public Application {
@@ -35,11 +39,9 @@ public:
 
     stack_navigator->registerScreen("/main", main_screen);
     stack_navigator->registerScreen("/admin", admin_screen);
+    stack_navigator->registerScreen("/pincode", pincode_screen);
 
-    auto initial = stack_navigator->getCurrentComponent();
-    // if (initial) {
-    //   initial->set_parent(screen);
-    // }
+    const auto initial = stack_navigator->getCurrentComponent();
 
     return initial.get();
   }

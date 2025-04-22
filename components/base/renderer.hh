@@ -8,7 +8,7 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-namespace base_widgets {
+namespace foundation {
 
 class renderer {
 
