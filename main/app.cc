@@ -37,17 +37,15 @@ public:
     std::shared_ptr<Styling> style1 = std::make_shared<Styling>();
     std::shared_ptr<Styling> style2 = std::make_shared<Styling>();
 
-    stack_navigator->registerScreen("/main", main_screen);
-    stack_navigator->registerScreen("/admin", admin_screen);
-    stack_navigator->registerScreen("/pincode", pincode_screen);
-
     const auto initial = stack_navigator->getCurrentComponent();
 
     return initial.get();
   }
 
   void before_load_application() override {
-    ESP_LOGI("MyApp", "before_load_application called");
+    stack_navigator->registerScreen("/main", main_screen);
+    stack_navigator->registerScreen("/admin", admin_screen);
+    stack_navigator->registerScreen("/pincode", pincode_screen);
   }
 
   void after_load_application() override {

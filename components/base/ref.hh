@@ -22,5 +22,10 @@ namespace foundation {
         Component* get() {
             return this->linked_component;
         }
+
+
+        template <typename T> T get_typed() {
+          return static_cast<T>(this->get());
+        }
     };
 }
