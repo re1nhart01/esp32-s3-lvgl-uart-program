@@ -60,27 +60,27 @@ public:
             .style = nullptr,
           }),
           $label(label_props{
-                       .ref = nullptr,
-                       .style = style2,
-                       .text = "text",
-                     }),
-                     $button(button_props{
-                       .ref = nullptr,
-                       .style = style1,
-                       .text = "navigate to admin",
-                       .on_click =
-                         [navigator_ref](lv_event_t *e) {
-                           navigator_ref->navigate("/main");
-                         },
-                     }),
-                    $input(textinput_props{
-                        .ref = nullptr,
-                        .style = style1,
-                        .placeholder = "text",
-                        .on_submit = [](std::string value) {
-                          ESP_LOGI("LoG", "%s", value.c_str());
-                        }
-                    }, nullptr),
+            .ref = nullptr,
+            .style = style2,
+            .text = "text",
+          }),
+          $button(button_props{
+           .ref = nullptr,
+           .style = style1,
+           .text = "navigate to admin",
+           .on_click =
+             [navigator_ref](lv_event_t *e) {
+               navigator_ref->navigate("/main");
+             },
+          }),
+          $input(textinput_props{
+            .ref = nullptr,
+            .style = style1,
+            .placeholder = "text",
+            .on_submit = [](std::string value) {
+              ESP_LOGI("LoG", "%s", value.c_str());
+            }
+          }, nullptr),
         },
         .width = LV_PCT(100),
         .height = LV_PCT(100),
