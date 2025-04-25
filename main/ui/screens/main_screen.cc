@@ -3,14 +3,10 @@
 #include "component.hh"
 #include "view.cc"
 
-#include "button.cc"
-#include "label.cc"
 #include "status_bar.cc"
 #include "state.cc"
 #include "text_input.cc"
 #include "macro_component.cc"
-#include "stack_navigator.cc"
-
 #include "stack_navigator.cc"
 
 namespace foundation
@@ -25,11 +21,7 @@ struct main_screen_props
   std::shared_ptr<foundation::Ref> ref = nullptr;
 };
 
-std::shared_ptr<Ref> label_ref = std::make_shared<Ref>("LABEL_0");
-std::shared_ptr<State<int>> state = std::make_shared<State<int>>(0);
-std::shared_ptr<View> root_element;
-
-class MainScreen : public foundation::Component
+class MainScreen : public Component
 {
   main_screen_props props;
   std::shared_ptr<StackNavigator> navigator;
@@ -71,7 +63,6 @@ public:
                        .ref = nullptr,
                        .style = style2,
                        .text = "text",
-                       .events = {},
                      }),
                      $button(button_props{
                        .ref = nullptr,
@@ -81,20 +72,11 @@ public:
                          [navigator_ref](lv_event_t *e) {
                            navigator_ref->navigate("/main");
                          },
-                       .on_long_press = [](lv_event_t *e) { /* ... */ },
-                       .on_pressed = [](lv_event_t *e) { /* ... */ },
-                       .on_released = [](lv_event_t *e) { /* ... */ },
-                       .on_focused = [](lv_event_t *e) { /* ... */ },
-                       .on_defocused = [](lv_event_t *e) { /* ... */ },
                      }),
                     $input(textinput_props{
                         .ref = nullptr,
                         .style = style1,
                         .placeholder = "text",
-                        .on_click = [](lv_event_t *e) {  },
-                        .on_focused = [](lv_event_t *e) { /* ... */ },
-                        .on_defocused = [](lv_event_t *e) { /* ... */ },
-                        .on_value_changed = [](lv_event_t *e) { /* ... */ },
                         .on_submit = [](std::string value) {
                           ESP_LOGI("LoG", "%s", value.c_str());
                         }

@@ -4,14 +4,13 @@
 #include "component.hh"
 #include <ctime>
 #include <string>
+#include "config.hh"
 
 extern "C" {
     #include "esp_log.h"
     #include "lvgl_port.h"
 }
 
-#define DISPLAY_BASE_TYPE = "WAVESHARE_DISPLAY"
-static const char *APP_TAG = "App:";
 
 
 namespace foundation {
@@ -69,11 +68,11 @@ namespace foundation {
 
                 this->after_load_application();
 
-#ifndef IS_MULTITHREAD
-                ESP_LOGI(APP_TAG, "Running on single-threaded LVGL loop");
+#if IS_MULTITHREAD
+                ESP_LOGI(APP_LOG_TAG, "Running on single-threaded LVGL loop");
 #endif
-#ifdef DISPLAY_BASE_TYPE
-                ESP_LOGI(APP_TAG, "Running waveshare display");
+#if DISPLAY_BASE_TYPE_WAVESHARE_DISPLAY
+                ESP_LOGI(APP_LOG_TAG, "Running waveshare display");
 #endif
 
                 lvgl_port_unlock();
@@ -84,8 +83,8 @@ namespace foundation {
 
     inline void Application::tick(lv_obj_t* scr, std::function<void()> callback) {
         if (lvgl_port_lock(-1)) {
-    #ifndef IS_MULTITHREAD
-            ESP_LOGI(APP_TAG, "Running on single-threaded LVGL loop");
+    #if IS_MULTITHREAD
+            ESP_LOGI(APP_LOG_TAG, "Running on single-threaded LVGL loop");
     #endif
 
             std::time_t result = std::time(nullptr);

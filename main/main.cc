@@ -2,11 +2,13 @@
 #include "view.cc"
 #include "app.cc"
 
+#include <memory>
+#include "references.cc"
 
 #define entrypoint [[maybe_unused]]
 
 extern "C" {
-#include "core/waveshare_rgb_lcd_port.h"
+  #include "core/waveshare_rgb_lcd_port.h"
 }
 
 using namespace foundation;
@@ -15,6 +17,9 @@ std::shared_ptr<WaveApplication> application;
 
 void entry() {
   waveshare_esp32_s3_rgb_lcd_init();
+
+  foundation::References::instance().set("my_component", component);
+  auto ref = foundation::References::instance().get("my_component");
 
   if (lvgl_port_lock(-1)) {
     lv_obj_t *screen = lv_scr_act();

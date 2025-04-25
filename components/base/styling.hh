@@ -3,9 +3,10 @@
 //
 
 #pragma once
-
+#include <machine/endian.h>
 #include "lv_demos.h"
 #include "lvgl_port.h"
+
 
 class Styling
 {
@@ -29,8 +30,7 @@ public:
   }
 
   // Установка градиента фона
-  Styling *
-  setBackgroundGradient(lv_color_t start, lv_color_t end, lv_grad_dir_t dir)
+  Styling* setBackgroundGradient(lv_color_t start, lv_color_t end, lv_grad_dir_t dir)
   {
     lv_style_set_bg_grad_color(&style, end);
     lv_style_set_bg_grad_dir(&style, dir);

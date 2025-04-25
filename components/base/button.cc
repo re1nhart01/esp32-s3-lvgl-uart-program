@@ -1,6 +1,3 @@
-#ifndef BUTTON_HH
-#define BUTTON_HH
-
 #include "component.hh"
 #include "esp_log.h"
 #include <functional>
@@ -11,8 +8,8 @@ static void event_adapter(lv_event_t *event);
 
 struct button_props {
   std::shared_ptr<Ref> ref = nullptr;
-  std::shared_ptr<Styling> style;
-
+  std::shared_ptr<Styling> style = nullptr;
+  std::shared_ptr<Component> child = nullptr;
   std::string text;
   std::function<void(lv_event_t *)> on_click = nullptr;
   std::function<void(lv_event_t *)> on_long_press = nullptr;
@@ -20,7 +17,9 @@ struct button_props {
   std::function<void(lv_event_t *)> on_released = nullptr;
   std::function<void(lv_event_t *)> on_focused = nullptr;
   std::function<void(lv_event_t *)> on_defocused = nullptr;
-};
+} typedef button_props;
+
+
 
 class Button : public Component {
 private:
@@ -43,19 +42,23 @@ public:
 
   lv_obj_t *render() override {
     lv_obj_t *parent_obj = this->get_parent();
-    if (!parent_obj)
-      return nullptr;
+    if (!parent_obj) return nullptr;
+
     set_component(lv_btn_create(parent_obj));
 
     auto *obj = this->get_component();
 
-    if (!this->props.text.empty()) {
-      this->label = lv_label_create(obj);
+    if (this->props.child != nullptr) {
+      this->props.child->set_parent(obj);
+      this->props.child->set_active(true);
+      this->props.child->render();
     }
 
-    if (!props.text.empty()) {
+    if (!this->props.text.empty()) {
+      this->label = lv_label_create(obj);
       lv_label_set_text(this->label, props.text.c_str());
     }
+
     lv_obj_add_flag(obj, LV_OBJ_FLAG_CLICKABLE);
 
     lv_obj_add_event_cb(obj, event_adapter, LV_EVENT_CLICKED, this);
@@ -115,7 +118,4 @@ static void event_adapter(lv_event_t *event) {
     ESP_LOGW("button", "Unknown event code %d", event->code);
   }
 }
-
-} // namespace foundation
-
-#endif // BUTTON_HH
+}

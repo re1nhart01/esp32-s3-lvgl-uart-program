@@ -1,11 +1,13 @@
-#ifndef LABEL_HH
-#define LABEL_HH
 
 #include "component.hh"
 
 namespace foundation {
 
-    struct label_events {
+    struct label_props {
+        std::shared_ptr<Ref> ref = nullptr;
+        std::shared_ptr<Styling> style;
+
+        std::string text;
         lv_event_cb_t on_click = nullptr;
         lv_event_cb_t on_long_press = nullptr;
         lv_event_cb_t on_pressed = nullptr;
@@ -13,14 +15,6 @@ namespace foundation {
         lv_event_cb_t on_focused = nullptr;
         lv_event_cb_t on_defocused = nullptr;
     };
-
-    struct label_props {
-        std::shared_ptr<Ref> ref = nullptr;
-        std::shared_ptr<Styling> style;
-
-        std::string text;
-        label_events events;
-    } typedef label_props;
 
     class Label final : public Component {
     private:
@@ -51,7 +45,7 @@ namespace foundation {
 
 
 
-            const auto& e = props.events;
+            const auto& e = props;
 
             if (e.on_click)       lv_obj_add_event_cb(obj, e.on_click, LV_EVENT_CLICKED, nullptr);
             if (e.on_long_press)  lv_obj_add_event_cb(obj, e.on_long_press, LV_EVENT_LONG_PRESSED, nullptr);
@@ -74,5 +68,3 @@ namespace foundation {
     };
 
 } // namespace foundation
-
-#endif // LABEL_HH

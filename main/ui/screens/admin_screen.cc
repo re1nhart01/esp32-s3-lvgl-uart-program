@@ -2,12 +2,7 @@
 #include "component.hh"
 #include "view.cc"
 
-#include "button.cc"
-#include "image.cc"
-#include "label.cc"
-#include "status_bar.cc"
 #include "state.cc"
-#include "text_input.cc"
 #include "macro_component.cc"
 #include "stack_navigator.cc"
 
@@ -74,7 +69,6 @@ public:
                        .ref = nullptr,
                        .style = style2,
                        .text = "text",
-                       .events = {},
                      }),
                      $button(button_props{
                        .ref = nullptr,

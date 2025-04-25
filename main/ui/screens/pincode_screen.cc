@@ -1,16 +1,8 @@
 #include <utility>
 
 #include "component.hh"
-#include "view.cc"
 
-#include "button.cc"
-#include "label.cc"
-#include "status_bar.cc"
-#include "state.cc"
-#include "text_input.cc"
 #include "macro_component.cc"
-#include "stack_navigator.cc"
-
 #include "stack_navigator.cc"
 
 namespace foundation
@@ -25,9 +17,7 @@ struct pincode_screen_props
   std::shared_ptr<foundation::Ref> ref = nullptr;
 };
 
-std::shared_ptr<Ref> label_ref = std::make_shared<Ref>("LABEL_0");
-std::shared_ptr<State<int>> state = std::make_shared<State<int>>(0);
-std::shared_ptr<View> root_element;
+
 
 class PinCodeScreen : public foundation::Component
 {
@@ -71,7 +61,6 @@ public:
                        .ref = nullptr,
                        .style = style2,
                        .text = "text",
-                       .events = {},
                      }),
                      $button(button_props{
                        .ref = nullptr,

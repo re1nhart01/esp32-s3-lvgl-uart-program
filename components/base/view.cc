@@ -1,6 +1,8 @@
 #pragma once
 
 #include "component.hh"
+#include "styling.hh"
+
 #include <memory>
 #include <vector>
 
