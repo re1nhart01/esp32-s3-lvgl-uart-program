@@ -28,7 +28,7 @@ auto pincode_screen = std::make_shared<PinCodeScreen>(
 
 class WaveApplication : public Application {
 public:
-  WaveApplication(lv_obj_t *screen)
+  explicit WaveApplication(lv_obj_t *screen)
     : Application(screen) {
   }
 
