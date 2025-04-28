@@ -54,32 +54,32 @@ DatasetDTO parse_into_dataset(const std::string& value_string) {
 
         if (value_string[i] == '/' || value_string[i] == '>') {
             if (!temporary.empty()) {
-                if (temporary.rfind("CH=", 0) == 0) {
+                if (temporary.find("CH=", 0) == 0) {
                     result.channels = std::stoi(temporary.substr(3));
                 }
-                else if (temporary.rfind("ST=", 0) == 0) {
+                else if (temporary.find("ST=", 0) == 0) {
                     result.status = StringToDatasetStatus(temporary.substr(3, 1).c_str());
                 }
-                else if (temporary.rfind("O2=", 0) == 0) {
+                else if (temporary.find("O2=", 0) == 0) {
                     result.oxygen_levels = unpack_arrays_float(temporary);
                 }
-                else if (temporary.rfind("FL=", 0) == 0) {
+                else if (temporary.find("FL=", 0) == 0) {
                     result.oxygen_speed = unpack_arrays_float(temporary);
                 }
-                else if (temporary.rfind("II=", 0) == 0) {
+                else if (temporary.find("II=", 0) == 0) {
                     result.inputs = std::stoi(temporary.substr(3), nullptr, 16);
                 }
-                else if (temporary.rfind("IO=", 0) == 0) {
+                else if (temporary.find("IO=", 0) == 0) {
                     result.outputs = std::stoi(temporary.substr(3), nullptr, 16);
                 }
-                else if (temporary.rfind("ER=", 0) == 0) {
+                else if (temporary.find("ER=", 0) == 0) {
                     result.errors = std::stoul(temporary.substr(3), nullptr, 16);
                 }
-                else if (temporary.rfind("PS=", 0) == 0) {
+                else if (temporary.find("PS=", 0) == 0) {
                     result.tanks_pressure = unpack_arrays_float(temporary);
 
                 }
-                else if (temporary.rfind("HR=", 0) == 0) {
+                else if (temporary.find("HR=", 0) == 0) {
                     result.moto_hours = temporary.substr(3);
                 }
             }
