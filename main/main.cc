@@ -1,9 +1,7 @@
 #include "application.hh"
-#include "view.cc"
 #include "app.cc"
 
 #include <memory>
-#include "references.cc"
 
 #define entrypoint [[maybe_unused]]
 

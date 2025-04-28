@@ -11,20 +11,20 @@ namespace foundation {
   };
 
   class Image final : public Component {
-        image_props props;
-        const std::string* base64_source = nullptr;
-    lv_img_dsc_t img_dsc;
+      image_props props;
+      const std::string* base64_source = nullptr;
+      lv_img_dsc_t img_dsc;
     public:
-        explicit Image(const lv_img_dsc_t source, const image_props& props)
-          : Component(nullptr, nullptr) {
+      explicit Image(const lv_img_dsc_t source, const image_props& props)
+        : Component(nullptr, nullptr) {
         this->props = props;
         set_style(props.style);
 
         this->img_dsc = source;
 
-        if(this->props.ref != nullptr) {
+        if (this->props.ref != nullptr) {
             this->props.ref->set(this);
-          }
+        }
       }
 
       ~Image() override = default;

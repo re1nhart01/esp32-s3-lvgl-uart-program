@@ -1,29 +1,26 @@
 #include "application.hh"
 #include "component.hh"
-#include "view.cc"
-
-#include "state.cc"
 #include "macro_component.cc"
 #include "stack_navigator.cc"
 
 using namespace foundation;
 
-struct admin_screen_props
+struct settings_screen_props
 {
-  std::shared_ptr<foundation::Ref> ref = nullptr;
+  std::shared_ptr<Ref> ref = nullptr;
 };
 
 std::unique_ptr<KeyboardManager> admin_keyboard = std::make_unique<KeyboardManager>();
 std::shared_ptr<Styling> imageStyle = std::make_shared<Styling>();
 
-class AdminScreen : public foundation::Component
+class SettingsScreen : public Component
 {
-  admin_screen_props props;
+  settings_screen_props props;
   std::shared_ptr<StackNavigator> navigator;
 
 public:
-  explicit AdminScreen(std::shared_ptr<StackNavigator> stack,
-                       const admin_screen_props &props)
+  explicit SettingsScreen(std::shared_ptr<StackNavigator> stack,
+                       const settings_screen_props &props)
       : Component(nullptr, nullptr)
   {
     this->props = props;
@@ -34,7 +31,7 @@ public:
       }
   }
 
-  ~AdminScreen() {
+  ~SettingsScreen() {
     Component::~Component();
   };
 
@@ -126,7 +123,7 @@ public:
     return this->style;
   }
 
-  AdminScreen *append(lv_obj_t *obj) override
+  SettingsScreen *append(lv_obj_t *obj) override
   {
     lv_obj_set_parent(obj, get_component());
     return this;

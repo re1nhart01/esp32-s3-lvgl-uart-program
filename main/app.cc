@@ -1,27 +1,24 @@
 #include "application.hh"
 #include "view.cc"
 
-#include "state.cc"
 #include "button.cc"
 #include "main_screen.cc"
-#include "admin_screen.cc"
 #include "pincode_screen.cc"
-
+#include "settings_screen.cc"
+#include "state.cc"
 
 using namespace foundation;
 
-
-std::shared_ptr<View> root_app_view;
-std::shared_ptr<Ref> label_ref_1 = std::make_shared<Ref>("LABEL_0");
-std::shared_ptr<State<int> > state_1 = std::make_shared<State<int> >(0);
-std::shared_ptr<StackNavigator> stack_navigator = std::make_shared<
-  StackNavigator>(StackNavigatorConfig{.initial_route = "/main"});
+auto label_ref_1 = std::make_shared<Ref>("LABEL_0");
+auto state_1 = std::make_shared<State<int>>(0);
+auto stack_navigator = std::make_shared<
+  StackNavigator>(StackNavigatorConfig{.initial_route = "/main"}, lv_scr_act());
 
 
 auto main_screen = std::make_shared<MainScreen>(
     stack_navigator, main_screen_props{.ref = nullptr});
-auto admin_screen = std::make_shared<AdminScreen>(
-    stack_navigator, admin_screen_props{.ref = nullptr});
+auto settings_screen = std::make_shared<SettingsScreen>(
+    stack_navigator, settings_screen_props{.ref = nullptr});
 auto pincode_screen = std::make_shared<PinCodeScreen>(
     stack_navigator, pincode_screen_props{.ref = nullptr});
 
@@ -44,8 +41,8 @@ public:
 
   void before_load_application() override {
     stack_navigator->registerScreen("/main", main_screen);
-    stack_navigator->registerScreen("/admin", admin_screen);
-    stack_navigator->registerScreen("/pincode", pincode_screen);
+    stack_navigator->registerScreen("/settings", settings_screen);
+    stack_navigator->registerScreen("/pin_code", pincode_screen);
   }
 
   void after_load_application() override {
