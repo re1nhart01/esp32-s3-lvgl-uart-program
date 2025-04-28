@@ -92,7 +92,7 @@ DatasetDTO parse_into_dataset(const std::string& value_string) {
         }
     }
 
-    result.crc = std::stoi(value_string.substr(value_string.length() - 2));
+    result.crc = std::stoi(value_string.substr(value_string.length() - 2), nullptr, 16);
 
     return result;
 }
