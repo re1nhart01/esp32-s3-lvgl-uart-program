@@ -2,7 +2,7 @@
 
 #include "component.hh"
 
-#include "macro_component.hh"
+#include "macro.hh"
 #include "stack_navigator.hh"
 #include "state.hh"
 

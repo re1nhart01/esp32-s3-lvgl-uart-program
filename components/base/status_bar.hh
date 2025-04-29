@@ -1,11 +1,11 @@
 #pragma once
 
 #include "component.hh"
+#include "label.hh"
+#include "macro.hh"
+#include "ref.hh"
 #include "styling.hh"
 #include "view.hh"
-#include "label.hh"
-#include "macro_component.hh"
-#include "ref.hh"
 
 #include <memory>
 

@@ -1,6 +1,6 @@
 #include "application.hh"
 #include "component.hh"
-#include "macro_component.hh"
+#include "macro.hh"
 #include "stack_navigator.hh"
 
 using namespace foundation;
