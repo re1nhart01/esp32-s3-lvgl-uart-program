@@ -9,7 +9,6 @@
 #include <esp_log.h>
 
 extern "C" {
-#include "lv_demos.h"
 #include "lvgl_port.h"
 }
 

@@ -1,69 +1,44 @@
-#include "component.hh"
-#include "base64.cc"
+#include "image.hh"
 
 namespace foundation {
-  struct image_props {
-    std::shared_ptr<Ref> ref = nullptr;
-    std::shared_ptr<Styling> style;
 
-    short real_width = 0;
-    short real_height = 0;
-  };
+  Image::Image(const lv_img_dsc_t source, const image_props& props)
+      : Component(nullptr, nullptr), props(props), img_dsc(source) {
+    set_style(props.style);
 
-  class Image final : public Component {
-      image_props props;
-      const std::string* base64_source = nullptr;
-      lv_img_dsc_t img_dsc;
-    public:
-      explicit Image(const lv_img_dsc_t source, const image_props& props)
-        : Component(nullptr, nullptr) {
-        this->props = props;
-        set_style(props.style);
+    if (this->props.ref != nullptr) {
+        this->props.ref->set(this);
+    }
+  }
 
-        this->img_dsc = source;
+  lv_obj_t* Image::render() {
+    if (get_component() == nullptr || this->parent == nullptr) {
+        this->set_component(this->create_initial(this->parent));
+    }
 
-        if (this->props.ref != nullptr) {
-            this->props.ref->set(this);
-        }
-      }
+    lv_obj_t* comp = get_component();
+    lv_img_set_src(comp, &this->img_dsc);
+    lv_obj_align(comp, LV_ALIGN_CENTER, 0, 0);
 
-      ~Image() override = default;
+    std::shared_ptr<Styling> style = this->styling();
+    if (style != nullptr) {
+        lv_obj_add_style(comp, style->getStyle(), LV_PART_MAIN);
+    }
 
-        lv_obj_t* render() override {
-          if (get_component() == nullptr || this->parent == nullptr) {
-              this->set_component(this->create_initial(this->parent));
-          }
+    return comp;
+  }
 
-          lv_obj_t* comp = get_component();
-          lv_img_set_src(comp, &this->img_dsc);
-          lv_obj_align(comp, LV_ALIGN_CENTER, 0, 0);
+  std::shared_ptr<Styling> Image::styling() {
+    return this->props.style ? this->props.style : std::shared_ptr<Styling>{};
+  }
 
+  Image* Image::append(lv_obj_t* obj) {
+    lv_obj_set_parent(obj, get_component());
+    return this;
+  }
 
+  lv_obj_t* Image::create_initial(lv_obj_t* parental) {
+    return lv_img_create(parental);
+  }
 
-          std::shared_ptr<Styling> style = this->styling();
-
-          if (style != nullptr) {
-              lv_obj_add_style(this->get_component(), style->getStyle(), LV_PART_MAIN);
-          }
-
-          return comp;
-        }
-
-        std::shared_ptr<Styling> styling() override {
-            if (this->props.style) {
-                return this->props.style;
-            }
-            return {};
-        }
-
-        Image* append(lv_obj_t *obj) override {
-            lv_obj_set_parent(obj, get_component());
-            return this;
-        }
-
-        lv_obj_t* create_initial(lv_obj_t* parental) {
-            return lv_img_create(parental);
-        }
-  };
-
-}
+} // namespace foundation

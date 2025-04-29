@@ -1,10 +1,10 @@
 #pragma once
 
+#include <string>
 
 namespace foundation {
-    class Component;
-
-    class Ref {
+  class Component;
+  class Ref {
     public:
         std::string name;
         Component* linked_component = nullptr;

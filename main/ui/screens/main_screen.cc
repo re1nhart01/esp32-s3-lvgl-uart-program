@@ -1,18 +1,10 @@
 #include <utility>
 
 #include "component.hh"
-#include "view.cc"
 
-#include "status_bar.cc"
-#include "state.cc"
-#include "text_input.cc"
-#include "macro_component.cc"
-#include "stack_navigator.cc"
-
-namespace foundation
-{
-  class StackNavigator;
-}
+#include "macro_component.hh"
+#include "stack_navigator.hh"
+#include "state.hh"
 
 using namespace foundation;
 

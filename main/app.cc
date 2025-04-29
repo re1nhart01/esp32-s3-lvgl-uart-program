@@ -1,11 +1,11 @@
 #include "application.hh"
-#include "view.cc"
+#include "view.hh"
 
-#include "button.cc"
+#include "button.hh"
 #include "main_screen.cc"
 #include "pincode_screen.cc"
 #include "settings_screen.cc"
-#include "state.cc"
+#include "state.hh"
 
 using namespace foundation;
 

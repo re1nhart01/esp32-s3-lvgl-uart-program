@@ -4,28 +4,25 @@
 #include <unordered_map>
 #include <utility>
 #include "config.hh"
-
-#pragma once
+#include "references.hh"
 
 namespace foundation {
-  class References {
-  private:
-    std::string name;
-    std::unordered_map<std::string, Ref*> storage;
 
-    References() : name(APP_STORAGE_NAME) {};
-    explicit References(std::string  name) : name(std::move(name)) {
+    References::References() : name(APP_STORAGE_NAME) {};
+    References::References(std::string  name) : name(std::move(name)) {
       this->storage = std::unordered_map<std::string, Ref*>();
     }
-    ~References() {
+    References::~References() {
       for (auto& [key, ref] : storage) {
           delete ref;
       }
     };
-  public:
-    References& operator=(const References&) = delete;
 
-    void set(const std::string& name, const Component* component) {
+    References* References::operator=(const References* other) const {
+      return nullptr;
+    };
+
+    void References::set(const std::string& name, const Component* component) {
       auto ref = new Ref(name);
       ref->set(const_cast<Component*>(component));
 
@@ -36,7 +33,7 @@ namespace foundation {
       this->storage[name] = ref;
     }
 
-    bool del(const std::string& name) {
+    bool References::del(const std::string& name) {
       const auto ref_get = this->storage.find(name);
       const bool exists = ref_get != this->storage.end();
 
@@ -49,16 +46,15 @@ namespace foundation {
       return exists;
     }
 
-    Ref* get(const std::string& name) const {
+    Ref* References::get(const std::string& name) const {
       auto ref_get = this->storage.find(name);
       return ref_get->second;
     }
 
 #if REFERENCE_STORE_SINGLETON
-    static References& instance() {
+  References& References::instance() {
       static References instance;
       return instance;
     }
 #endif
-  };
 }

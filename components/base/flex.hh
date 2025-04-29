@@ -1,6 +1,4 @@
-//
-// Created by evgeniy on 4/23/25.
-//
+#pragma once
 
 #include "extra/layouts/flex/lv_flex.h"
 
