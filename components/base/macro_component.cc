@@ -10,3 +10,16 @@
 #define $input(...) std::make_shared<TextInput>(__VA_ARGS__)
 #define $button(...) std::make_shared<Button>(__VA_ARGS__)
 #define $statusbar(...) std::make_shared<StatusBar>(__VA_ARGS__)
+
+
+
+namespace foundation {
+  struct entrypoint {};
+}
+
+#define entry \
+extern "C" void app_main() { \
+ESP_LOGI("APPLICATION ENTRYPOINT", "START"); \
+
+#define end \
+}

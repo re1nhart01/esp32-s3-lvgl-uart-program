@@ -30,10 +30,6 @@ public:
   }
 
   Component *root_component() override {
-    std::shared_ptr<Styling> style = std::make_shared<Styling>();
-    std::shared_ptr<Styling> style1 = std::make_shared<Styling>();
-    std::shared_ptr<Styling> style2 = std::make_shared<Styling>();
-
     const auto initial = stack_navigator->getCurrentComponent();
 
     return initial.get();

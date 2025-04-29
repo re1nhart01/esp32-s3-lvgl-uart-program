@@ -19,7 +19,8 @@ enum class DatasetStatuses {
 };
 
 template<typename T>
-using data_storage_array = std::array<T, 8>;
+typedef std::array<T, 8> data_storage_array;
+//using data_storage_array = std::array<T, 8>;
 
 // Map enum to char*
 inline const char* DatasetStatusToString(DatasetStatuses status) {
