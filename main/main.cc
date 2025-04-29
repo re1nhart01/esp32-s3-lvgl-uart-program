@@ -12,7 +12,6 @@ using namespace foundation;
 std::shared_ptr<WaveApplication> application;
 
 
-[[foundation::entrypoint]]
 void main() {
   waveshare_esp32_s3_rgb_lcd_init();
 
@@ -27,6 +26,4 @@ void main() {
 }
 
 
-entry
-  main();
-end
+entry(main) end

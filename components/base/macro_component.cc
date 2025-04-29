@@ -17,9 +17,10 @@ namespace foundation {
   struct entrypoint {};
 }
 
-#define entry \
+#define entry(func) \
 extern "C" void app_main() { \
 ESP_LOGI("APPLICATION ENTRYPOINT", "START"); \
+func(); \
 
 #define end \
 }
