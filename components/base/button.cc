@@ -79,4 +79,4 @@ static void event_adapter(lv_event_t *event) {
   }
 }
 
-} // namespace foundation
+}

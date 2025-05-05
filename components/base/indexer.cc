@@ -21,6 +21,7 @@
 #include "state.hh"
 #include "references.hh"
 #include "flex.hh"
+#include "circular_progress.hh"
 
 extern "C" {
 #include "../lvgl__lvgl/demos/lv_demos.h"

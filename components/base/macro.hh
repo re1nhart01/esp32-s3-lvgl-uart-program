@@ -9,6 +9,7 @@
 #include "animated.hh"
 #include "image.hh"
 #include "scroll_view.hh"
+#include "circular_progress.hh"
 
 
 #ifndef FOUNDATION_ENTRYPOINT_HH
@@ -22,7 +23,8 @@
 #define $statusbar(...)   std::make_shared<StatusBar>(__VA_ARGS__)
 #define $animated(...)    std::make_shared<Animated>(__VA_ARGS__)
 #define $image(...)       std::make_shared<Image>(__VA_ARGS__)
-#define $scroll_view(...)  std::make_shared<ScrollView>(__VA_ARGS__)
+#define $scroll_view(...) std::make_shared<ScrollView>(__VA_ARGS__)
+#define $circular(...)    std::make_shared<CircularProgress>(__VA_ARGS__)
 
 
 

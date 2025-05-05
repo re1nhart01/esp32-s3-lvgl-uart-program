@@ -24,12 +24,14 @@ namespace foundation {
     label_props props;
 
   public:
-    explicit Label(label_props  props);
+    explicit Label(label_props props);
     ~Label() override = default;
 
     lv_obj_t* render() override;
     std::shared_ptr<Styling> styling() override;
     Label* append(lv_obj_t* obj) override;
+
+    void update(const std::string &value) const;
   };
 
 } // namespace foundation

@@ -37,6 +37,14 @@ namespace foundation {
     return props.style;
   }
 
+  void Label::update(const std::string &value) const {
+    lv_obj_t* obj = this->get_component();
+    if (obj != nullptr) {
+        lv_label_set_text(this->get_component(), value.c_str());
+    }
+  }
+
+
   Label* Label::append(lv_obj_t* obj) {
     lv_obj_set_parent(obj, get_component());
     return this;

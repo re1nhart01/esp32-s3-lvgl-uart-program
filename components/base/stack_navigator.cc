@@ -30,7 +30,7 @@ void StackNavigator::navigate(const std::string& name) {
     auto it = screens.find(name);
     if (it != screens.end()) {
         auto screen = it->second;
-        lv_obj_t* active_screen = this->parent;
+        lv_obj_t* active_screen = this->parent != nullptr ? this->parent : lv_scr_act();
 
         lv_obj_clean(active_screen);
 

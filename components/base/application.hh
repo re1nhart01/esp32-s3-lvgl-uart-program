@@ -53,6 +53,8 @@ namespace foundation {
     inline void Application::renderApp() {
         if (this->screen == nullptr) return;
         if (this->root == nullptr) {
+            this->before_load_application();
+
             Component* root_component_view = this->root_component();
             this->set_root(root_component_view);
         }
@@ -61,8 +63,6 @@ namespace foundation {
             this->root->set_parent(this->screen);
 
             if (lvgl_port_lock(-1)) {
-                this->before_load_application();
-
                 lv_obj_t* rendered = this->root->render();
                 this->root->set_component(rendered);
 

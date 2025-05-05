@@ -11,8 +11,11 @@ using namespace foundation;
 
 auto label_ref_1 = std::make_shared<Ref>("LABEL_0");
 auto state_1 = std::make_shared<State<int>>(0);
+
+auto screen = lv_scr_act();
+
 auto stack_navigator = std::make_shared<
-  StackNavigator>(StackNavigatorConfig{.initial_route = "/main"}, lv_scr_act());
+  StackNavigator>(StackNavigatorConfig{.initial_route = "/main"}, screen);
 
 
 auto main_screen = std::make_shared<MainScreen>(

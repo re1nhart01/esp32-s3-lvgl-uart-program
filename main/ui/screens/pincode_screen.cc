@@ -61,6 +61,16 @@ public:
                        .style = style2,
                        .text = "text",
                      }),
+          $circular(circular_props{
+            .ref = nullptr,
+            .label_symbol = "%",
+            .show_label_default = true,
+            .min_dy = 0,
+            .max_dy = 100,
+            .default_dy = 40,
+            .w = 300,
+            .h = 300,
+          }),
                      $button(button_props{
                        .ref = nullptr,
                        .style = style1,

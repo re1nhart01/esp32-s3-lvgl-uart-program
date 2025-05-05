@@ -51,6 +51,16 @@ public:
             .ref = nullptr,
             .style = nullptr,
           }),
+          $circular(circular_props{
+            .ref = nullptr,
+            .label_symbol = "%",
+            .show_label_default = true,
+            .min_dy = 0,
+            .max_dy = 100,
+            .default_dy = 20,
+            .w = 100,
+            .h = 100,
+          }),
           $label(label_props{
             .ref = nullptr,
             .style = style2,
