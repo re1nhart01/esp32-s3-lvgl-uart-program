@@ -30,7 +30,7 @@ namespace foundation {
     lv_arc_set_range(arc, props.min_dy, props.max_dy);             // Диапазон значений (например, SpO₂)
     lv_arc_set_value(arc, props.default_dy);                 // Значение кислорода
     lv_obj_clear_flag(arc, LV_OBJ_FLAG_HIDDEN);
-
+    lv_obj_set_style_bg_opa(arc, LV_OPA_TRANSP, 0);
     lv_arc_set_bg_angles(arc, 135, 45);        // Отображать полукруг
     lv_arc_set_rotation(arc, 0);             // Начало сверху
     lv_obj_set_size(arc, props.w, props.h);
@@ -50,7 +50,7 @@ namespace foundation {
         this->label->set_parent(arc);
         this->label->render();
 
-        lv_obj_center(this->label->get_component());
+        lv_obj_align_to(this->label->get_component(), arc, LV_ALIGN_CENTER, 0, 0);
     }
 
     return arc;
