@@ -81,7 +81,7 @@ std::shared_ptr<View> render_header() const {
                             .text = locales::en::header_settings,
                         }),
                         .on_click = [navigator_ref](lv_event_t* e) {
-                            navigator_ref->navigate("/pincode");
+                            navigator_ref->navigate("/pin_code");
                         }
                     }),
                 },

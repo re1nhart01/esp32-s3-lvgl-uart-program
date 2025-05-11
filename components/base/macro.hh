@@ -41,7 +41,6 @@
 
 
 #define $s(key) this->styles->get(key)
-
 #define $rn(fn) this->fn()
 
 namespace foundation {
