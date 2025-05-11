@@ -6,10 +6,6 @@
 #include "driver/gpio.h"
 #include "driver/i2c.h"
 #include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "esp_lcd_panel_ops.h"
-#include "esp_lcd_panel_rgb.h"
-#include "esp_lcd_touch_gt911.h"
 #include "lv_demos.h"
 #include "lvgl_port.h"
 
@@ -72,9 +68,5 @@ esp_err_t waveshare_esp32_s3_rgb_lcd_init();
 
 esp_err_t waveshare_rgb_lcd_bl_on();
 esp_err_t waveshare_rgb_lcd_bl_off();
-
-static const char* TAG = "WaveshareDisplay";
-
-void example_lvgl_demo_ui();
 
 #endif
