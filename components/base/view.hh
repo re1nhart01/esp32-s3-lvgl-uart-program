@@ -33,6 +33,7 @@ namespace foundation {
 
   public:
     explicit View(lv_obj_t *parent, const view_props& props);
+    explicit View(const view_props& props);
     ~View() override = default;
 
     lv_obj_t* render() override;

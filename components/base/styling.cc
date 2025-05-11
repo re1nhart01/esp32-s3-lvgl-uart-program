@@ -166,3 +166,45 @@ Styling* Styling::setSizeW(const short width, const short height) {
     this->height = height;
     return this;
 }
+
+Styling *Styling::setMaxHeight(const short height) {
+  lv_style_set_max_height(&style, height);
+  return this;
+}
+
+Styling *Styling::setMaxWidth(const short height) {
+  lv_style_set_max_width(&style, height);
+  return this;
+}
+
+
+Styling *Styling::setDirection(const short direction) {
+  lv_style_set_base_dir(&style, direction);
+  return this;
+}
+
+Styling* Styling::setGap(const int row, const int column) {
+  lv_style_set_pad_row(&style, row);
+  lv_style_set_pad_column(&style, column);
+  return this;
+}
+
+Styling* Styling::setLayoutFlex() {
+  lv_style_set_layout(&style, LV_LAYOUT_FLEX);
+  return this;
+}
+
+Styling* Styling::setFlexFlow(lv_flex_flow_t flow) {
+  lv_style_set_flex_flow(&style, flow);
+  return this;
+}
+
+Styling* Styling::setAlign(lv_flex_align_t align) {
+  lv_style_set_align(&style, align);
+  return this;
+}
+
+Styling* Styling::setFlexGrow(uint8_t grow) {
+  lv_style_set_flex_grow(&style, grow);
+  return this;
+}

@@ -14,19 +14,21 @@ namespace foundation {
   lv_obj_t* StatusBar::render() {
     std::shared_ptr<Styling> styleV = this->styling();
 
+    this->label = $label(label_props{
+                    .ref = nullptr,
+                    .style = nullptr,
+                    .text = "00:00",
+                  });
+
     auto layout = $view(
         this->parent,
         view_props{
             .ref = nullptr,
             .style = styleV,
             .children = {
-                $view(nullptr, view_props{ .width = 0 }),
-                $label(label_props{
-                    .ref = nullptr,
-                    .style = nullptr,
-                    .text = "00:00",
-                }),
-                $view(nullptr, view_props{ .width = 0 }),
+                $fragment,
+                this->label,
+                $fragment,
             },
             .width = LV_PCT(100),
             .height = 24,
@@ -55,6 +57,11 @@ namespace foundation {
 
     return this->style;
   }
+
+  void StatusBar::update(const char* value) const {
+    lv_label_set_text(this->label->get_component(), value);
+  }
+
 
   StatusBar* StatusBar::append(lv_obj_t* obj) {
     lv_obj_set_parent(obj, get_component());

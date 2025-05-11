@@ -68,8 +68,8 @@ public:
             .min_dy = 0,
             .max_dy = 100,
             .default_dy = 40,
-            .w = 300,
-            .h = 300,
+            .w = 200,
+            .h = 200,
           }),
                      $button(button_props{
                        .ref = nullptr,

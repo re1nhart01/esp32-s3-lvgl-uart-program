@@ -22,8 +22,7 @@ namespace foundation {
         Ref* ref = nullptr;
 
     public:
-        virtual ~Component() {
-          on_unmount();
+        virtual ~Component() { Component::on_unmount();
         };
 
         Component() {
@@ -34,7 +33,7 @@ namespace foundation {
             : component(obj), parent(parent) {
             this->style = std::make_shared<Styling>();
 
-            on_mount();
+          Component::on_mount();
         }
 
         virtual void on_mount() {

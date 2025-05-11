@@ -26,30 +26,35 @@ typedef enum
 } lv_flex_flow_t;
 */
 
-  namespace foundation
-{
+namespace foundation {
   View::View(lv_obj_t * parent, const view_props &props)
-      : Component(nullptr, parent), props(props)
-  {
+      : Component(nullptr, parent), props(props) {
     set_style(props.style);
-    if(!props.children.empty())
-      {
-        this->children.insert(this->children.end(), props.children.begin(),
-                              props.children.end());
+    if(!props.children.empty()) {
+        this->children.insert(this->children.end(), props.children.begin(), props.children.end());
       }
 
-    if(this->props.ref != nullptr)
-      {
+    if(this->props.ref != nullptr) {
         this->props.ref->set(this);
-      }
+    }
   }
 
-  lv_obj_t *View::render()
-  {
-    if(get_component() == nullptr || this->parent == nullptr)
-      {
+  View::View(const view_props &props)
+      : Component(nullptr, nullptr), props(props) {
+    set_style(props.style);
+    if(!props.children.empty()) {
+        this->children.insert(this->children.end(), props.children.begin(), props.children.end());
+    }
+
+    if(this->props.ref != nullptr) {
+        this->props.ref->set(this);
+    }
+  }
+
+  lv_obj_t *View::render() {
+    if(get_component() == nullptr || this->parent == nullptr) {
         this->set_component(this->create_initial(this->parent));
-      }
+    }
     lv_obj_t *comp = get_component();
     lv_obj_set_layout(comp, LV_LAYOUT_FLEX);
     lv_obj_set_size(comp, props.width, props.height);
@@ -57,6 +62,8 @@ typedef enum
     lv_obj_set_flex_align(comp, props.justify_content, props.align_items,
                           props.track_cross_place);
 
+    lv_obj_set_scroll_dir(comp, LV_DIR_NONE);
+    lv_obj_set_scrollbar_mode(comp, LV_SCROLLBAR_MODE_OFF);
     std::shared_ptr<Styling> style = this->styling();
 
     for (const auto& child : this->children) {

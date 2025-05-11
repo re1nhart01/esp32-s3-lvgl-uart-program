@@ -19,13 +19,15 @@ namespace foundation {
   class StatusBar final : public Component {
   public:
     status_bar_props props;
-
+    std::shared_ptr<Label> label = nullptr;
     explicit StatusBar(const status_bar_props& props);
     ~StatusBar() override = default;
 
     lv_obj_t* render() override;
     std::shared_ptr<Styling> styling() override;
     StatusBar* append(lv_obj_t* obj) override;
+
+    void update(const char* value) const;
   };
 
 } // namespace foundation

@@ -19,6 +19,11 @@ lv_obj_t *Button::render() {
 
   auto *obj = this->get_component();
 
+  lv_obj_set_layout(obj, LV_LAYOUT_FLEX);
+  lv_obj_set_flex_flow(obj, LV_FLEX_FLOW_ROW);
+  lv_obj_set_flex_align(obj, LV_FLEX_ALIGN_SPACE_AROUND, LV_FLEX_ALIGN_CENTER,
+                        LV_FLEX_ALIGN_CENTER);
+
   if (this->props.child != nullptr) {
     this->props.child->set_parent(obj);
     this->props.child->set_active(true);
@@ -28,6 +33,10 @@ lv_obj_t *Button::render() {
   if (!this->props.text.empty()) {
     this->label = lv_label_create(obj);
     lv_label_set_text(this->label, props.text.c_str());
+  }
+
+  if (const auto style = this->styling(); style != nullptr) {
+      lv_obj_add_style(obj, style->getStyle(), LV_PART_MAIN);
   }
 
   lv_obj_add_flag(obj, LV_OBJ_FLAG_CLICKABLE);
@@ -40,8 +49,11 @@ lv_obj_t *Button::render() {
   return obj;
 }
 
-std::shared_ptr<Styling> Button::styling() {
-  return this->props.style ? this->props.style : std::shared_ptr<Styling>{};
+  std::shared_ptr<Styling> Button::styling() {
+  if (this->props.style) {
+      return this->props.style;
+  }
+  return {};
 }
 
 Button *Button::append(lv_obj_t *obj) {

@@ -1,8 +1,12 @@
 #pragma once
 
+
+#include <memory>
+
 #include "component.hh"
 #include "label.hh"
-#include <memory>
+#include "view.hh"
+
 
 #ifndef CIRCULAR_PROGRESS_HH
 #define CIRCULAR_PROGRESS_HH
@@ -27,6 +31,7 @@ namespace foundation {
   private:
     circular_props props;
     std::shared_ptr<Label> label = nullptr;
+    lv_obj_t* arc_reference = nullptr;
     bool is_show_label = false;
 
   public:

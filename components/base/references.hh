@@ -8,11 +8,11 @@ namespace foundation {
   private:
     std::string name;
     std::unordered_map<std::string, Ref*> storage;
-
+  public:
     References();
     explicit References(std::string  name);
     ~References();
-  public:
+
     References* operator=(const References*) const;
     void set(const std::string& name, const Component* component);
     bool del(const std::string& name);

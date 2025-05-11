@@ -2,6 +2,8 @@
 
 #include "component.hh"
 #include "esp_log.h"
+#include "shared.hh"
+
 #include <functional>
 #include <memory>
 #include <string>

@@ -10,6 +10,7 @@ file(GLOB_RECURSE SOURCES
         "${PROJECT_ROOT}/components/base/*.hh"
         "${PROJECT_ROOT}/main/ui/screens/*.cc"
         "${PROJECT_ROOT}/main/ui/*.cc"
+        "${PROJECT_ROOT}/main/ui/styles/*.cc"
 )
 
 idf_component_register(
@@ -20,6 +21,7 @@ idf_component_register(
         "${PROJECT_ROOT}/components/base"
         "${PROJECT_ROOT}/main/ui"
         "${PROJECT_ROOT}/main/ui/screens"
+        "${PROJECT_ROOT}/main/ui/styles"
 )
 
 set(CMAKE_CXX_STANDARD 17)

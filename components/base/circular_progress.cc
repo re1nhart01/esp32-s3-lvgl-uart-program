@@ -1,7 +1,6 @@
 #include <utility>
 
 #include "circular_progress.hh"
-
 #include "component.hh"
 #include "macro.hh"
 
@@ -9,7 +8,6 @@ namespace foundation {
   CircularProgress::CircularProgress(circular_props  props)
       : Component(nullptr, nullptr), props(std::move(props)) {
     this->parent = nullptr;
-
 
     this->is_show_label = props.show_label_default;
 
@@ -24,36 +22,42 @@ namespace foundation {
 
     auto props = this->props;
 
-    this->set_component(lv_arc_create(parent_obj));
-    const auto arc = this->get_component();
+    lv_obj_t* container = lv_obj_create(parent_obj);
+    lv_obj_set_size(container, props.w + 5, props.h + 5);
+    lv_obj_clear_flag(container, LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_set_style_bg_opa(container, LV_OPA_TRANSP, 0);
+    lv_obj_set_style_border_width(container, 0, LV_PART_MAIN);
 
-    lv_arc_set_range(arc, props.min_dy, props.max_dy);             // Диапазон значений (например, SpO₂)
-    lv_arc_set_value(arc, props.default_dy);                 // Значение кислорода
-    lv_obj_clear_flag(arc, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_set_style_bg_opa(arc, LV_OPA_TRANSP, 0);
-    lv_arc_set_bg_angles(arc, 135, 45);        // Отображать полукруг
-    lv_arc_set_rotation(arc, 0);             // Начало сверху
-    lv_obj_set_size(arc, props.w, props.h);
+    this->set_component(container);
 
-    lv_obj_remove_style(arc, nullptr, LV_PART_KNOB);
-    lv_obj_clear_flag(arc, LV_OBJ_FLAG_CLICKABLE);  // Не кликабельный
+    this->arc_reference = lv_arc_create(container);
+    lv_obj_set_size(arc_reference, props.w, props.h);
+    lv_arc_set_range(arc_reference, props.min_dy, props.max_dy);
+    lv_arc_set_value(arc_reference, props.default_dy);
+    lv_arc_set_bg_angles(arc_reference, 135, 45);
+    lv_arc_set_rotation(arc_reference, 0);
+    lv_obj_clear_flag(arc_reference, LV_OBJ_FLAG_CLICKABLE);
+    lv_obj_set_style_bg_opa(arc_reference, LV_OPA_TRANSP, 0);
+    lv_obj_remove_style(arc_reference, nullptr, LV_PART_KNOB);
+    lv_obj_center(arc_reference);
 
     if (style != nullptr) {
-        lv_obj_add_style(this->get_component(), this->styling()->getStyle(), LV_PART_MAIN);
+        lv_obj_add_style(arc_reference, this->styling()->getStyle(), LV_PART_MAIN);
     }
 
     if (this->is_show_label) {
         this->label = $label(label_props{
-          .text = "100%",
+            .text = "100%",
         });
 
-        this->label->set_parent(arc);
+        this->label->set_parent(container);
         this->label->render();
 
-        lv_obj_align_to(this->label->get_component(), arc, LV_ALIGN_CENTER, 0, 0);
+        lv_obj_align_to(this->label->get_component(), arc_reference, LV_ALIGN_CENTER, 0, 0);
+        lv_obj_move_foreground(this->label->get_component());
     }
 
-    return arc;
+    return container;
   }
 
   void CircularProgress::show_label(const bool value) const {
