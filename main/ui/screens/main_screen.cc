@@ -39,7 +39,7 @@ public:
     style_main_screen_register(*this->styles);
   }
 
-std::shared_ptr<View> render_header() const {
+[[nodiscard]] std::shared_ptr<View> render_header() const {
     auto navigator_ref = this->navigator;
 
     return $view(view_props{
@@ -93,7 +93,7 @@ std::shared_ptr<View> render_header() const {
 }
 
 
-  std::shared_ptr<Button> render_footer() const {
+  [[nodiscard]] std::shared_ptr<Button> render_footer() const {
     return $button(button_props{
         .ref = nullptr,
         .style = $s("footer.button"),
@@ -105,7 +105,7 @@ std::shared_ptr<View> render_header() const {
       });
   }
 
-  std::shared_ptr<View> render_body() const {
+  [[nodiscard]] std::shared_ptr<View> render_body() const {
     return $view(view_props{
     .ref = nullptr,
     .style = $s("header.container"),
@@ -162,7 +162,7 @@ std::shared_ptr<View> render_header() const {
 
 
   lv_obj_t *render() override {
-      this->renderer_view = $view(
+     return this->delegate($view(
       this->parent,
       view_props{
         .ref = nullptr,
@@ -177,11 +177,7 @@ std::shared_ptr<View> render_header() const {
           $rn(render_footer),
         },
         screen_container_props,
-      });
-
-    this->renderer_view->set_parent(this->parent);
-    this->set_component(this->renderer_view->render());
-    return this->renderer_view->get_component();
+      }));
   }
 
 

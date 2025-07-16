@@ -81,6 +81,21 @@ namespace foundation {
             }
         }
 
+        /*
+         *  @delegate
+         *  @arg1 = std::shared_ptr<Component>&
+         *  this method uses only if you want to pass foundation component (not internal lvgl)
+         *
+         */
+        lv_obj_t* delegate(const std::shared_ptr<Component>& component_view) {
+          this->renderer_view = component_view;
+
+          this->renderer_view->set_parent(this->parent);
+          this->set_component(this->renderer_view->render());
+
+          return this->renderer_view->get_component();
+        }
+
         std::shared_ptr<Styling> get_style() const {
             return this->style;
         }

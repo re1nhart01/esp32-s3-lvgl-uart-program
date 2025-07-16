@@ -10,4 +10,6 @@
 #define FIRMWARE_VERSION "v0.0.1"
 #define USER_NAME "re1nhart"
 
+#define default_pincode "0000"
+
 #endif //CONTROL_CONFIG_HH

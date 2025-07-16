@@ -31,7 +31,7 @@ public:
       }
   }
 
-  ~SettingsScreen() {
+  ~SettingsScreen() override {
     Component::~Component();
   };
 
